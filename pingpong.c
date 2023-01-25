@@ -13,6 +13,53 @@
 
 int main() {
 
+    int p1[2],p2[2];
 
+    // 来回传输的字符数组: 一个字节
+    char buffer[] = {'x'};
 
+    // 传输字符数组的长度
+    long length = sizeof(buffer);
+
+    // 父进程写 p1 的数据缓存在名为管道的内存中
+    pipe(p1);
+
+    // 父进程写 p2 的数据缓存在名为管道的内存中
+    pipe(p2);
+
+    // 子进程
+    if(fork() == 0){
+        close(p1[1]);
+        close(p2[0]);
+
+        if(read(p1[0],buffer,length) != length){
+            printf("a--->b read error!");
+            exit(1);
+        }
+
+        printf("%d: received ping\n",getpid());
+
+        if(write(p2[1],buffer,lengthh) != length){
+            printf("a<----b write error!");
+            exit(1);
+        }
+        exit(0);
+    }
+
+    close(p1[0]);
+    close(p2[1]);
+
+    if(write(p1[1],buffer,length) != length){
+        printf("a ----> b write error");
+        exit(1);
+    }
+
+    if(read(p2[0],buffer,length) != length){
+        printf("a <--- b read error !");
+        exit(1);
+    }
+
+    printf("%d: received pong\n",getpid());
+    wait(0);
+    exit(0);
 }
