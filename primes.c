@@ -11,7 +11,7 @@
  * */
 
 #include "kernel/types.h"
-#inlcude "user/user.h"
+#include "user/user.h"
 
 void func(int *input,int num) {
 
