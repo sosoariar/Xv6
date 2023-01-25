@@ -39,7 +39,7 @@ int main() {
 
         printf("%d: received ping\n",getpid());
 
-        if(write(p2[1],buffer,lengthh) != length){
+        if(write(p2[1],buffer,length) != length){
             printf("a<----b write error!");
             exit(1);
         }
